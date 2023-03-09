@@ -11,7 +11,7 @@
                                         <strong>Form Edit</strong>  Buku
                                     </div>
                                     <div class="card-body card-block">
-                                        <form action="{{ route('books.update', $book->id)}}" method="post" class="">
+                                        <form action="{{ route('books.update', $book->id)}}" enctype="multipart/form-data" method="post" class="">
                                             {{ csrf_field() }}
                                             <div class="form-group">
                                                 <label for="nf-email" class=" form-control-label">Judul</label>
@@ -31,7 +31,7 @@
                                             </div>
                                             <div class="form-group">
                                                 <label for="nf-email" class=" form-control-label">Gambar</label>
-                                                <input type="text" name="gambar" class="form-control" value="{{ $book->gambar}}">
+                                                <input type="file" name="gambar" class="form-control" value="{{ $book->gambar}}">
                                             </div>
                                             
                                             <div class="card-footer">

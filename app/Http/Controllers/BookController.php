@@ -98,11 +98,31 @@ class BookController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $book = Book::findOrFail($id);
-        $book->update($request->all());
-        $book->save();
+        if (empty($request->file('gambar'))) {
 
-        return redirect()->route('books.index');
+            $books = Book::find($id);
+            $books->update([
+                'judul' => $request->judul,
+                'pengarang' => $request->pengarang,
+                'penerbit' => $request->penerbit,
+                'tahun_terbit' => $request->tahun_terbit,
+            ]);
+            return redirect()->route('books.index');
+        } else {
+            
+            $books = Book::find($id);
+            Storage::delete($books->gambar);
+            $books->update([
+                'judul' => $request->judul,
+                'pengarang' => $request->pengarang,
+                'penerbit' => $request->penerbit,
+                'tahun_terbit' => $request->tahun_terbit,
+                'gambar' => $request->file('gambar')->store('books'),
+            ]);
+            return redirect()->route('books.index');
+        }
+
+        
     }
 
     /**
